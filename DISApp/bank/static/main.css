@@ -38,14 +38,16 @@ h1.sds {
 
 .content-section {
     background: #ffffff;
-    padding: 10px 20px;
+    padding: 20px 30px;
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .article-title {
     color: #444444;
+    margin-top: 0;
 }
 
 a.article-title:hover {
@@ -66,7 +68,7 @@ a.article-title:hover {
 .article-metadata {
     padding-bottom: 1px;
     margin-bottom: 4px;
-    border-bottom: 1px solid #e3e3e3
+    border-bottom: 1px solid #e3e3e3;
 }
 
 .article-metadata a:hover {
@@ -89,4 +91,33 @@ a.article-title:hover {
 
 .account-heading {
     font-size: 2.5rem;
+}
+
+/* New styles added */
+.homepage {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.uffo-logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.author, .date {
+    font-weight: bold;
+}
+
+.post-title {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
