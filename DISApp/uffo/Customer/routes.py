@@ -1,17 +1,17 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
-from bank import app, conn, bcrypt
-from bank.forms import DepositForm, InvestForm
-from bank.forms import TransferForm
+from uffo import app, conn, bcrypt
+from uffo.forms import DepositForm, InvestForm
+from uffo.forms import TransferForm
 from flask_login import current_user
-from bank.models import CheckingAccount, InvestmentAccount, update_CheckingAccount
-from bank.models import select_cus_investments_with_certificates, select_cus_investments, select_cus_investments_certificates_sum
-from bank.models import select_cus_accounts
+from uffo.models import CheckingAccount, InvestmentAccount, update_CheckingAccount
+from uffo.models import select_cus_investments_with_certificates, select_cus_investments, select_cus_investments_certificates_sum
+from uffo.models import select_cus_accounts
 
 
 import sys, datetime
 
 #202212
-from bank import roles, mysession
+from uffo import roles, mysession
 
 iEmployee = 1
 iCustomer = 2

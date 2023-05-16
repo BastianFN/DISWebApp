@@ -1,3 +1,3 @@
-from bank import app
+from uffo import app
 if __name__ == '__main__':
     app.run(debug=True)

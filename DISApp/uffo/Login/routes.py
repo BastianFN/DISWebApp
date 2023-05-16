@@ -1,11 +1,11 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
-from bank import app, conn, bcrypt
-from bank.forms import CustomerLoginForm, EmployeeLoginForm
+from uffo import app, conn, bcrypt
+from uffo.forms import CustomerLoginForm, EmployeeLoginForm
 from flask_login import login_user, current_user, logout_user, login_required
-from bank.models import Customers, select_Customers, select_Employees
+from uffo.models import Customers, select_Customers, select_Employees
 
 #202212
-from bank import roles, mysession
+from uffo import roles, mysession
 
 Login = Blueprint('Login', __name__)
 
@@ -25,12 +25,12 @@ def home():
     return render_template('home.html', posts=posts, role=role)
 
 
-@Login.route("/about")
-def about():
+@Login.route("/heatmap")
+def heatmap():
     #202212
-    mysession["state"]="about"
+    mysession["state"]="heatmap"
     print(mysession)
-    return render_template('about.html', title='About')
+    return render_template('heatmap.html', title='Heatmap')
 
 
 @Login.route("/login", methods=['GET', 'POST'])
