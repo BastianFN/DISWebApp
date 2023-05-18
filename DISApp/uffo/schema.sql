@@ -1,5 +1,16 @@
 \i schema_drop.sql
 
+CREATE TABLE IF NOT EXISTS UFO_sightings (
+    id SERIAL PRIMARY KEY,
+    city VARCHAR(255),
+    state VARCHAR(255),
+    country VARCHAR(255),
+    comments TEXT,
+    date_posted DATE,
+    latitude DECIMAL(11,8),
+    longitude DECIMAL(11,8)
+);
+
 CREATE TABLE IF NOT EXISTS Customers(
 	CPR_number integer PRIMARY KEY,
 	risk_type boolean default False,

@@ -1,5 +1,23 @@
-{% extends "layout.html" %}
-{% block content %}
-    <h1 class="heatmapTitle">Heatmap Page</h1>
-{% endblock content %}
+{% extends "layout.html" %} {% block content %}
+<h1 class="heatmapTitle">Heatmap of all the saucers</h1>
+<div id="map" style="width: 100%; height: 600px;"></div>
+<script>
+  var map = L.map('map').setView([0, 0], 2) // Initial map view centered at 0,0 and zoom level 2
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map)
 
+  fetch('/sightings')
+    .then((response) => response.json())
+    .then((sightings) => {
+      // Convert the sightings data into a format suitable for the heatmap
+      var heatmapData = sightings.map((sighting) => [
+        sighting.latitude,
+        sighting.longitude,
+        1, // assuming you want to give each sighting the same weight
+      ])
+      // Create and add the heatmap layer to the map
+      var heat = L.heatLayer(heatmapData, { radius: 25 }).addTo(map)
+    })
+</script>
+{% endblock content %}

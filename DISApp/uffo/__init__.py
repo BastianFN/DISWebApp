@@ -2,6 +2,7 @@ from flask import Flask
 import psycopg2
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from uffo.UFO.routes import ufo
 
 #202212
 #from flask import session
@@ -13,7 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fc089b9218301ad987914c53481bff04'
 
 # set your own database
-#db = "dbname='bank' user='postgres' host='127.0.0.1' password = 'UIS'"
+#db = "dbname='uffo' user='postgres' host='127.0.0.1' password = 'UIS'"
 db = "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
 conn = psycopg2.connect(db)
 
@@ -41,5 +42,4 @@ from uffo.Employee.routes import Employee
 app.register_blueprint(Login)
 app.register_blueprint(Customer)
 app.register_blueprint(Employee)
-
-#from bank import routes
+app.register_blueprint(ufo)

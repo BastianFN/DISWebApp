@@ -1,5 +1,7 @@
 body {
-  background: #FCFDFC;
+  /* For white background */
+  /* background: #FCFDFC; */
+  background: rgb(0, 0, 0);
   color: #333333;
   margin-top: 5rem;
 }
@@ -20,8 +22,15 @@ h1.logoTitle {
   text-align: center; /* Add this property to center the text */
 }
 
+h1.heatmapTitle {
+  color: #007bbc;
+  font-family: 'Lucida Console', 'Courier New';
+  font-weight: bold;
+  text-align: center; /* Add this property to center the text */
+}
+
 .bg-steel {
-  background-color: #5f788a;
+  background-color: #007bbc;
 }
 
 .site-header .navbar-nav .nav-link {
