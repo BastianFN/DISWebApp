@@ -1,6 +1,10 @@
 {% extends "layout.html" %} {% block content %}
 <h1 class="heatmapTitle">Heatmap of all the saucers</h1>
-<div id="map" style="width: 100%; height: 600px;"></div>
+<div id="map" style="width: 100%; height: 500px;"></div>
+<div
+  id="ticker"
+  style="width: 200%; white-space: nowrap; overflow: hidden;"
+></div>
 <script>
   var map = L.map('map').setView([0, 0], 2) // Initial map view centered at 0,0 and zoom level 2
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -14,10 +18,29 @@
       var heatmapData = sightings.map((sighting) => [
         sighting.latitude,
         sighting.longitude,
-        1, // assuming you want to give each sighting the same weight
+        1,
       ])
       // Create and add the heatmap layer to the map
       var heat = L.heatLayer(heatmapData, { radius: 25 }).addTo(map)
     })
+
+  var page = 1;
+  const tickerElement = document.getElementById('ticker');
+  function loadComments() {
+    fetch(`/comments?page=${page}&per_page=100`)
+      .then((response) => response.json())
+      .then((comments) => {
+        // Add the new comments to the ticker
+        var newTickerText = comments.map((comment) => `<span>${comment}</span>`).join(' &nbsp;&nbsp;&nbsp;&nbsp; ')
+        tickerElement.innerHTML = newTickerText;
+        page++;
+        if (comments.length === 100) { // loads 100 comments at a time
+          // There might be more comments, schedule loading the next batch
+          setTimeout(loadComments, 30000); // Wait 5 seconds before loading more
+        }
+      })
+  }
+  loadComments();
+
 </script>
 {% endblock content %}

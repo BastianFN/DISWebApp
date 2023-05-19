@@ -2,6 +2,8 @@ import psycopg2
 import csv
 
 # Helper function to validate floating point numbers
+
+
 def is_float(value):
     try:
         float(value)
@@ -9,9 +11,11 @@ def is_float(value):
     except ValueError:
         return False
 
+
 def create_database():
     # connect to the 'uffo' database
-    conn = psycopg2.connect(dbname='uffo', user='bastian', host='127.0.0.1', password='UIS')
+    conn = psycopg2.connect(dbname='uffo', user='bastian',
+                            host='127.0.0.1', password='UIS')
     cursor = conn.cursor()
 
     # drop the 'ufo_sightings' table if it exists
@@ -45,7 +49,7 @@ def create_database():
                 try:
                     cursor.execute(
                         "INSERT INTO UFO_sightings (city, state, country, comments, date_posted, latitude, longitude) VALUES (%s, %s, %s, %s, TO_DATE(%s, 'MM/DD/YYYY'), %s, %s)",
-                        (row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+                            (row[0], row[1], row[2], row[3], row[4], row[5], row[6])
                     )
                     conn.commit()
                 except Exception as e:
@@ -57,6 +61,7 @@ def create_database():
     # close the cursor and the connection
     cursor.close()
     conn.close()
+
 
 # Run the function
 create_database()

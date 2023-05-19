@@ -4,6 +4,7 @@ body {
   background: rgb(0, 0, 0);
   color: #333333;
   margin-top: 5rem;
+  overflow: hidden;
 }
 
 h1,
@@ -15,6 +16,35 @@ h6 {
   color: #444444;
 }
 
+#ticker {
+  animation: ticker 30s linear infinite;
+  border: none; /* temporary, to see the boundaries of the ticker div */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0
+  ); /* temporary, to ensure the text is visible */
+  height: 50px; /* adjust if needed */
+  font-size: 20px;
+  font-style: italic;
+  color: white;
+  padding: 10px;
+  margin: 0;
+  line-height: 50px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 a.logoTitle {
   color: #007bbc;
   font-family: 'Lucida Console', 'Courier New';
@@ -24,7 +54,7 @@ a.logoTitle {
   transition: transform ease 0.2s, box-shadow 0.2s ease;
 }
 
-a.logoTitle:hover{
+a.logoTitle:hover {
   cursor: pointer;
   transform: scale(1.02);
   text-decoration: none;

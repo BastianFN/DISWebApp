@@ -18,7 +18,7 @@ def select_all_ufo_sightings():
     conn = psycopg2.connect(dbname='uffo', user='bastian', host='127.0.0.1', password='UIS')
     cursor = conn.cursor()
     
-    cursor.execute("SELECT latitude, longitude FROM UFO_sightings;")
+    cursor.execute("SELECT latitude, longitude, comments FROM UFO_sightings;")
     data = cursor.fetchall()  # Fetch all the data
 
     cursor.close()
@@ -26,13 +26,26 @@ def select_all_ufo_sightings():
 
     return data
 
+def get_ufo_comments(page=1, per_page=50):
+    conn = psycopg2.connect(dbname='uffo', user='bastian', host='127.0.0.1', password='UIS')
+    cursor = conn.cursor()
 
-def import_from_csv(file_path):
-    with open(file_path, 'r') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            insert_ufo_sighting(row)
+    cursor.execute(f"SELECT comments FROM UFO_sightings ORDER BY sighting_id ASC LIMIT {per_page} OFFSET {(page - 1) * per_page}")
+    data = [row[0] for row in cursor.fetchall()]  # Fetch all the data
+
+    cursor.close()
+    conn.close()
+
+    return data
 
 
-if __name__ == "__main__":
-    import_from_csv("scrubbed3.csv")
+
+# def import_from_csv(file_path):
+#     with open(file_path, 'r') as f:
+#         reader = csv.DictReader(f)
+#         for row in reader:
+#             insert_ufo_sighting(row)
+
+
+# if __name__ == "__main__":
+#     import_from_csv("scrubbed3.csv")
