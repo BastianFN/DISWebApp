@@ -1,8 +1,16 @@
 {% extends "layout.html" %} {% block content %}
-<div class="homepage">
-  <div class="welcome-banner">
-    <img src="../static/Images/uffoLogoBlack.png" alt="uffoLogo" class="uffo-logo" />
-    <a class="logoTitle" href="{{ url_for('Login.heatmap') }}">IT'S UFFO TIME</a>
+<body class="no-scroll">
+  <div class="homepage">
+    <div class="welcome-banner">
+      <img
+        src="../static/Images/uffoLogoBlack.png"
+        alt="uffoLogo"
+        class="uffo-logo"
+      />
+      <a class="logoTitle" href="{{ url_for('Login.heatmap') }}">
+        IT'S UFFO TIME
+      </a>
+    </div>
   </div>
-</div>
+</body>
 {% endblock content %}
