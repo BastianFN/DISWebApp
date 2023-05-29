@@ -37,9 +37,5 @@ mysession = {"state" : "initializing","role" : "Not assingned", "id": 0 ,"age" :
 print(mysession)
 
 from uffo.Login.routes import Login
-from uffo.Customer.routes import Customer
-from uffo.Employee.routes import Employee
 app.register_blueprint(Login)
-app.register_blueprint(Customer)
-app.register_blueprint(Employee)
 app.register_blueprint(ufo)

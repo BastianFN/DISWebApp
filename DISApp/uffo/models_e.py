@@ -1,8 +1,5 @@
 # write all your SQL queries in this file.
-from datetime import datetime
-from uffo import conn, login_manager
-from flask_login import UserMixin
-from psycopg2 import sql
+from uffo import conn
 
 
 def select_emp_cus_accounts(emp_cpr_number):
