@@ -4,8 +4,9 @@ body {
   background: rgb(0, 0, 0);
   color: #333333;
   margin-top: 5rem;
-  overflow: hidden;
 }
+
+
 
 h1,
 h2,
@@ -161,6 +162,11 @@ a.article-title:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh; /* This will make sure the body takes the full height of the viewport, preventing scrolling */
 }
 
 .uffo-logo {
