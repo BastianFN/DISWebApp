@@ -32,6 +32,13 @@ def heatmap():
     print(mysession)
     return render_template('heatmap.html', title='Heatmap')
 
+@Login.route("/posts")
+def posts():
+    #202212
+    mysession["state"]="posts"
+    print(mysession)
+    return render_template('posts.html', title='Posts')
+
 
 @Login.route("/login", methods=['GET', 'POST'])
 def login():
