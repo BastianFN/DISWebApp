@@ -72,39 +72,52 @@ class Transfers(tuple):
         self.amount = user_data[1]
         self.transfer_date = user_data[2]
 
-def insert_Customers(name, CPR_number, password):
-    cur = conn.cursor()
-    sql = """
-    INSERT INTO Customers(name, CPR_number, password)
-    VALUES (%s, %s, %s)
-    """
-    cur.execute(sql, (name, CPR_number, password))
-    # Husk commit() for INSERT og UPDATE, men ikke til SELECT!
-    conn.commit()
-    cur.close()
+# def insert_Customers(name, CPR_number, password):
+#     cur = conn.cursor()
+#     sql = """
+#     INSERT INTO Customers(name, CPR_number, password)
+#     VALUES (%s, %s, %s)
+#     """
+#     cur.execute(sql, (name, CPR_number, password))
+#     # Husk commit() for INSERT og UPDATE, men ikke til SELECT!
+#     conn.commit()
+#     cur.close()
 
-def select_Customers(name):
+@login_manager.user_loader
+def load_user(user_id):
+    cur = conn.cursor()
+
+    user_sql = """
+    SELECT * FROM Users
+    WHERE username = %s
+    """
+
+    cur.execute(user_sql, (user_id,))
+    if cur.rowcount > 0:
+        return User(cur.fetchone())
+    else:
+        return None
+
+
+class User(tuple, UserMixin):
+    def __init__(self, user_data):
+        self.username = user_data[0]
+        self.password = user_data[1]
+
+    def get_id(self):
+        return self.username
+
+
+def select_User(username):
     cur = conn.cursor()
     sql = """
-    SELECT * FROM Customers
-    WHERE name = %s
+    SELECT * FROM Users
+    WHERE username = %s
     """
-    cur.execute(sql, (name,))
-    user = Customers(cur.fetchone()) if cur.rowcount > 0 else None
+    cur.execute(sql, (username,))
+    user = User(cur.fetchone()) if cur.rowcount > 0 else None
     cur.close()
     return user
-
-def select_Employees(name):
-    cur = conn.cursor()
-    sql = """
-    SELECT * FROM Employees
-    WHERE name = %s
-    """
-    cur.execute(sql, (name,))
-    user = Employees(cur.fetchone()) if cur.rowcount > 0 else None
-    cur.close()
-    return user
-
 
 def update_CheckingAccount(amount, CPR_number):
     cur = conn.cursor()

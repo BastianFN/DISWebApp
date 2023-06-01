@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from uffo import bcrypt
-from uffo.forms import CustomerLoginForm, EmployeeLoginForm
+from uffo.forms import LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
-from uffo.models import select_Customers, select_Employees
+from uffo.models import select_User
 from datetime import datetime
 
 
@@ -81,19 +81,17 @@ def create_post():
 def login():
     mysession["state"]="login"
     print(mysession)
-    role=None
     
     if current_user.is_authenticated:
         return redirect(url_for('Login.home'))    
     
-    is_employee = True if request.args.get('is_employee') == 'true' else False
-    form = EmployeeLoginForm() if is_employee else CustomerLoginForm()
+    form = LoginForm()
     
     if form.validate_on_submit():
-        user = select_Employees(form.username.data) if is_employee else select_Customers(form.username.data)
+        user = select_User(form.username.data)
         
-        if user != None and bcrypt.check_password_hash(user.password, form.password.data):
-            mysession["role"] = user.role
+        # Change the bcrypt.check_password_hash() function to a simple comparison
+        if user and user.password == form.password.data:
             mysession["username"] = form.username.data
             print(mysession)
                             
@@ -104,10 +102,7 @@ def login():
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
-    role =  mysession.get("role", "")
-    print('role: '+ role)
-
-    return render_template('login.html', title='Login', is_employee=is_employee, form=form, role=role)
+    return render_template('login.html', title='Login', form=form)
 
 
 

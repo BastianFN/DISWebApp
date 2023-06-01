@@ -13,18 +13,22 @@ def is_float(value):
 
 
 def create_database():
-    from uffo import db
     # connect to the 'uffo' database
-    conn = psycopg2.connect(db)
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
     cursor = conn.cursor()
 
     # drop the 'ufo_sightings' table if it exists
-    cursor.execute('''
+    cursor.execute(
+        """
         DROP TABLE IF EXISTS UFO_sightings;
-    ''')
+    """
+    )
 
     # create the 'ufo_sightings' table
-    cursor.execute('''
+    cursor.execute(
+        """
         CREATE TABLE UFO_sightings(
             sighting_id SERIAL PRIMARY KEY,
             city VARCHAR(255),
@@ -35,21 +39,22 @@ def create_database():
             latitude FLOAT,
             longitude FLOAT
         );
-    ''')
+    """
+    )
 
     # commit the transaction
     conn.commit()
 
     # load data from csv file
-    with open('UFO/scrubbed3.csv', 'r') as f:
-        reader = csv.reader(f, delimiter=';')
+    with open("UFO/scrubbed3.csv", "r") as f:
+        reader = csv.reader(f, delimiter=";")
         next(reader)  # Skip the header row.
         for row in reader:
             if len(row) >= 7 and is_float(row[5]) and is_float(row[6]):
                 try:
                     cursor.execute(
                         "INSERT INTO UFO_sightings (city, state, country, comments, date_posted, latitude, longitude) VALUES (%s, %s, %s, %s, TO_DATE(%s, 'MM/DD/YYYY'), %s, %s)",
-                            (row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+                        (row[0], row[1], row[2], row[3], row[4], row[5], row[6]),
                     )
                     conn.commit()
                 except Exception as e:
@@ -63,5 +68,68 @@ def create_database():
     conn.close()
 
 
+def create_user_table():
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+    CREATE TABLE IF NOT EXISTS users(
+        username VARCHAR(30) PRIMARY KEY,
+        password varchar(120)
+    );
+    """
+    )
+    conn.commit()
+    cur.close()
+
+
+def create_post_table():
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS Posts(
+	post_number SERIAL PRIMARY KEY,
+	longitude DECIMAL(11,8),
+	latitude DECIMAL(11,8),
+	comments TEXT,
+	username VARCHAR(30) REFERENCES Users(username)
+    );
+        """
+    )
+    conn.commit()
+    cur.close()
+
+
+def create_user_sightings_table():
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS User_sightings(
+    sighting_id SERIAL PRIMARY KEY, 
+    username VARCHAR(30) REFERENCES Users(username),
+    longitude DECIMAL(11,8),
+    latitude DECIMAL(11,8),
+    comments TEXT
+    );
+        """
+    )
+    conn.commit()
+    cur.close()
+
+
 # Run the function
 create_database()
+create_user_table()
+create_post_table()
+create_user_sightings_table()
