@@ -83,27 +83,28 @@ def insert_Customers(name, CPR_number, password):
     conn.commit()
     cur.close()
 
-def select_Customers(CPR_number):
+def select_Customers(name):
     cur = conn.cursor()
     sql = """
     SELECT * FROM Customers
-    WHERE CPR_number = %s
+    WHERE name = %s
     """
-    cur.execute(sql, (CPR_number,))
-    user = Customers(cur.fetchone()) if cur.rowcount > 0 else None;
+    cur.execute(sql, (name,))
+    user = Customers(cur.fetchone()) if cur.rowcount > 0 else None
     cur.close()
     return user
 
-def select_Employees(id):
+def select_Employees(name):
     cur = conn.cursor()
     sql = """
     SELECT * FROM Employees
-    WHERE id = %s
+    WHERE name = %s
     """
-    cur.execute(sql, (id,))
-    user = Employees(cur.fetchone()) if cur.rowcount > 0 else None;
+    cur.execute(sql, (name,))
+    user = Employees(cur.fetchone()) if cur.rowcount > 0 else None
     cur.close()
     return user
+
 
 def update_CheckingAccount(amount, CPR_number):
     cur = conn.cursor()

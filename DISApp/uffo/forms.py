@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 class AddCustomerForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
-    CPR_number = IntegerField('CPR_number',
+    CPR_number = StringField('CPR_number',
                         validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Add')
