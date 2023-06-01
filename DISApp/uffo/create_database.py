@@ -13,9 +13,9 @@ def is_float(value):
 
 
 def create_database():
+    from uffo import db
     # connect to the 'uffo' database
-    conn = psycopg2.connect(dbname='uffo', user='bastian',
-                            host='127.0.0.1', password='UIS')
+    conn = psycopg2.connect(db)
     cursor = conn.cursor()
 
     # drop the 'ufo_sightings' table if it exists

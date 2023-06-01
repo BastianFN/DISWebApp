@@ -263,7 +263,7 @@ a.article-title:hover {
 }
 
 .no-scroll {
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 100vh; /* This will make sure the body takes the full height of the viewport, preventing scrolling */
 }
 

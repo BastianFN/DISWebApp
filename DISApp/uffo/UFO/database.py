@@ -14,8 +14,9 @@ def insert_ufo_sighting(sighting):
 
 
 def select_all_ufo_sightings():
+    from uffo import db
     from uffo import conn
-    conn = psycopg2.connect(dbname='uffo', user='bastian', host='127.0.0.1', password='UIS')
+    conn = psycopg2.connect(db)
     cursor = conn.cursor()
     
     cursor.execute("SELECT latitude, longitude, comments FROM UFO_sightings;")
@@ -27,7 +28,8 @@ def select_all_ufo_sightings():
     return data
 
 def get_ufo_comments(page=1, per_page=50):
-    conn = psycopg2.connect(dbname='uffo', user='bastian', host='127.0.0.1', password='UIS')
+    from uffo import db
+    conn = psycopg2.connect(db)
     cursor = conn.cursor()
 
     cursor.execute(f"SELECT comments FROM UFO_sightings ORDER BY sighting_id ASC LIMIT {per_page} OFFSET {(page - 1) * per_page}")
