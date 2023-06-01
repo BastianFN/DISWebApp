@@ -8,16 +8,14 @@ from psycopg2 import sql
 def load_user(user_id):
     cur = conn.cursor()
 
-    schema = 'customers'
-    id = 'cpr_number'
-    if str(user_id).startswith('60'):
-        schema = 'employees'
-        id = 'id'
+    schema = 'Users'
+    username = 'username'
+    
 
     user_sql = sql.SQL("""
     SELECT * FROM {}
     WHERE {} = %s
-    """).format(sql.Identifier(schema),  sql.Identifier(id))
+    """).format(sql.Identifier(schema),  sql.Identifier(username))
 
     cur.execute(user_sql, (int(user_id),))
     if cur.rowcount > 0:
