@@ -99,6 +99,7 @@ def create_post_table():
 	longitude DECIMAL(11,8),
 	latitude DECIMAL(11,8),
 	comments TEXT,
+    date_posted DATE,
 	username VARCHAR(30) REFERENCES Users(username)
     );
         """
@@ -111,18 +112,19 @@ def create_user_sightings_table():
     conn = psycopg2.connect(
         "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
     )
+
     cur = conn.cursor()
 
     cur.execute(
         """
-        CREATE TABLE IF NOT EXISTS User_sightings(
-    sighting_id SERIAL PRIMARY KEY, 
-    username VARCHAR(30) REFERENCES Users(username),
-    longitude DECIMAL(11,8),
-    latitude DECIMAL(11,8),
-    comments TEXT
+    CREATE TABLE IF NOT EXISTS User_sightings(
+        sighting_id SERIAL PRIMARY KEY,
+        comments TEXT,
+        latitude FLOAT,
+        longitude FLOAT,
+        username VARCHAR(30) REFERENCES users(username)
     );
-        """
+    """
     )
     conn.commit()
     cur.close()

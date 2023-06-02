@@ -1,5 +1,7 @@
 # write all your SQL queries in this file.
 from datetime import datetime
+
+import psycopg2
 from uffo import conn, login_manager
 from flask_login import UserMixin
 from psycopg2 import sql
@@ -118,6 +120,26 @@ def select_User(username):
     user = User(cur.fetchone()) if cur.rowcount > 0 else None
     cur.close()
     return user
+
+def get_posts():
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
+    cur = conn.cursor()
+    
+    cur.execute(
+        """
+        SELECT username, comments, date_posted
+        FROM Posts
+        ORDER BY date_posted DESC;
+        """
+    )
+    posts = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return posts
 
 def update_CheckingAccount(amount, CPR_number):
     cur = conn.cursor()

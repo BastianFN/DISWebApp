@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from uffo import bcrypt
 from uffo.forms import LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
-from uffo.models import select_User
+from uffo.models import select_User, get_posts
 from datetime import datetime
 
 
@@ -34,48 +34,55 @@ def heatmap():
     print(mysession)
     return render_template('heatmap.html', title='Heatmap')
 
-@Login.route("/posts")
+@Login.route("/posts", methods=['GET'])
 def posts():
     #202212
     mysession["state"]="posts"
     print(mysession)
-    return render_template('posts.html', title='Posts')
+    posts = get_posts()
+    return render_template('posts.html', title='Posts', posts=posts)
+
+# @Login.route('/posts', methods=['GET'])
+# def display_posts():
+#     posts = get_posts()
+#     return render_template('posts.html', posts=posts)
 
 @Login.route('/create_post', methods=['POST'])
 def create_post():
     from uffo import conn
     cur = conn.cursor()
+    date_posted = datetime.now().date()  # current date
     # Get data from form
     longitude = request.form.get('longitude')
     latitude = request.form.get('latitude')
     comment = request.form.get('comment')
+    date = date_posted
     username = current_user.username  # assuming you are using Flask-Login or a similar extension
 
     # Add to Posts table
     post_query = """
-    INSERT INTO Posts (longitude, latitude, comments, username)
-    VALUES (%s, %s, %s, %s)
+    INSERT INTO Posts (longitude, latitude, comments, date_posted, username)
+    VALUES (%s, %s, %s, %s, %s)
     """
-    cur.execute(post_query, (longitude, latitude, comment, username))
+    cur.execute(post_query, (longitude, latitude, comment, date, username))
 
     # Add to User_sightings table
     sighting_query = """
-    INSERT INTO User_sightings (city, state, country, comments, date_posted, latitude, longitude, username)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    INSERT INTO User_sightings (comments, latitude, longitude, username)
+    VALUES (%s, %s, %s, %s)
     """
     # You'll need to determine how to get city, state, country data.
     # For now, I'll just set them to NULL.
     city = state = country = None
-    date_posted = datetime.now().date()  # current date
 
-    cur.execute(sighting_query, (city, state, country, comment, date_posted, latitude, longitude, username))
+    cur.execute(sighting_query, (comment, latitude, longitude, username))
 
     # Commit changes and close connection
     conn.commit()
     cur.close()
 
     flash('Post created successfully!', 'success')
-    return redirect(url_for('home'))  # Redirect user to the home page (or wherever you want)
+    return redirect(url_for('Login.home'))  # Redirect user to the home page (or wherever you want)
 
 @Login.route("/login", methods=['GET', 'POST'])
 def login():

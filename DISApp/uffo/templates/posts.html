@@ -1,34 +1,44 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-8">
       <h2 class="mb-4">UFO sightings</h2>
-      {% for post in posts %}
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
-          <p class="card-text">{{ post.content }}</p>
-          <button type="button" class="btn btn-primary">Like</button>
-          <button type="button" class="btn btn-secondary">Comment</button>
-        </div>
-        <div class="card-footer text-muted">
-          Posted on {{ post.date_posted }} by <a href="#">{{ post.author }}</a>
-        </div>
-      </div>
-      {% endfor %}
       <form method="POST" action="{{ url_for('Login.create_post') }}">
         <div class="form-group">
-          <label for="postContent" style="color: white;">Tell about your sighting:</label>
-          <textarea name="comment" class="form-control" id="postContent" rows="5" required></textarea>
+          <label for="postContent" style="color: white;">
+            Tell about your sighting:
+          </label>
+          <textarea
+            name="comment"
+            class="form-control"
+            id="postContent"
+            rows="5"
+            required
+          ></textarea>
         </div>
         <div class="form-group">
           <label for="latitude" style="color: white;">Latitude:</label>
-          <input type="number" step="0.00000001" name="latitude" id="latitude" class="form-control" placeholder="Latitude" required>
+          <input
+            type="number"
+            step="0.00000001"
+            name="latitude"
+            id="latitude"
+            class="form-control"
+            placeholder="Latitude"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="longitude" style="color: white;">Longitude:</label>
-          <input type="number" step="0.00000001" name="longitude" id="longitude" class="form-control" placeholder="Longitude" required>
+          <input
+            type="number"
+            step="0.00000001"
+            name="longitude"
+            id="longitude"
+            class="form-control"
+            placeholder="Longitude"
+            required
+          />
         </div>
         <button type="submit" class="submitButton">Submit</button>
       </form>
@@ -37,12 +47,31 @@
       <div class="card my-4">
         <h5 class="card-header">Your profile</h5>
         <div class="card-body">
-          <img src="../static/Images/profilePicTrans.png" class="img-fluid mb-3" alt="Profile Picture">
+          <img
+            src="../static/Images/profilePicTrans.png"
+            class="img-fluid mb-3"
+            alt="Profile Picture"
+          />
           <h5>UFOnator421</h5>
           <!-- <h5>{{ current_user.username }}</h5> -->
         </div>
       </div>
     </div>
+    {% for post in posts %}
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="card-text">{{ post[1] }}</p>
+        <!-- This will print the 'comments' -->
+        <button type="button" class="btn btn-primary">Like</button>
+        <button type="button" class="btn btn-secondary">Comment</button>
+      </div>
+      <div class="card-footer text-muted">
+        Posted on {{ post[2] }} by
+        <a href="#">{{ post[0] }}</a>
+        <!-- This will print 'date_posted' and 'username' respectively -->
+      </div>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock content %}
