@@ -2,6 +2,7 @@ body {
   /* For white background */
   /* background: #FCFDFC; */
   background: rgb(0, 0, 0);
+  background: url('Images/starry_sky.jpeg');
   color: #333333;
   margin-top: 5rem;
 }
@@ -20,13 +21,96 @@ h6 {
   color: #007bbc;
   font-family: 'Lucida Console', 'Courier New';
   font-weight: bold;
-  font-size: 4em;
+  font-size: 3em;
   text-align: center; /* Add this property to center the text */
   transition: transform ease 0.2s, box-shadow 0.2s ease;
 }
 
+.card {
+  background: radial-gradient(ellipse at center, #020031 0%, #6d3353 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.card-header {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}
+
+#postContent {
+  /* background: radial-gradient(ellipse at center, #007bbc 0%, #020031 50%); */
+  /* background-image: url('Images/starry_sky.jpeg'); */
+  background: rgba(0, 0, 0, 0.7);
+  border: 0.2px solid #007bbc;
+  color: #fff;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+  border-radius: 25px;
+}
+
+#postContent::placeholder {
+  color: #bbb;
+}
+
+#postContent:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(0, 123, 188, 0.5);
+}
+
+.posts {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-control {
+  background: rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 1.2em;
+  border: none;
+  padding: 10px 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 0.2px dotted #007bbc;
+
+  /* Added UFO-like glow effect */
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(0, 123, 188, 0.5);
+  background: radial-gradient(
+    circle,
+    rgba(0, 123, 188, 0.5),
+    rgba(0, 0, 0, 0.1)
+  );
+}
+
+.form-group .bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .submitButton {
-  position: relative;
   border: none;
   background: rgba(0, 123, 188, 1);
   color: #ffffff;
@@ -54,53 +138,24 @@ button:after {
     0 0 200px #007bbc;
 }
 
-.card {
-  background: radial-gradient(ellipse at center, #020031 0%, #6d3353 100%);
+.coordinates {
+  width: 65%;
+}
+
+#latitude::placeholder,
+#longitude::placeholder {
+  color: #b6b6b6;
+}
+
+#latitude {
   color: #fff;
-  border: none;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transition: box-shadow 0.3s ease;
-}
-
-.card-header {
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: rgba(0,0,0,0.1);
-}
-
-.card-body {
-  font-family: 'Courier New', Courier, monospace;
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 0;
-}
-
-.form-control {
-  background: rgba(0,0,0,0.1);
-  color: #fff;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  font-size: 1.2em;
-  border: none;
-  padding: 10px 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transition: box-shadow 0.3s ease, background 0.3s ease;
-  border-radius: 25px;
-
-  /* Added UFO-like glow effect */
-}
-
-.form-control:focus {
-  outline: none;
-  box-shadow: 0 0 20px rgba(0,123,188,0.5);
-  background: radial-gradient(circle, rgba(0,123,188,0.5), rgba(0,0,0,0.1));
+  width: 100%;
 }
 
 #longitude {
+  color: #fff;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .post.card.mb-4 {
@@ -109,40 +164,13 @@ button:after {
   font-weight: bold;
   font-size: 1em;
   text-align: center; /* Add this property to center the text */
-
 }
 
 .post.card-body {
-
 }
 
 .card-body h5 {
   margin-top: 1rem;
-}
-
-
-.postContent {
-  color: #ffffff;
-}
-
-#postContent {
-  background: radial-gradient(ellipse at center, #007bbc 0%, #020031 50%);
-  color: #fff;
-  font-size: 1.2em;
-  border: none;
-  padding: 10px 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transition: box-shadow 0.3s ease;
-  border-radius: 25px;
-}
-
-#postContent::placeholder {
-  color: #bbb;
-}
-
-#postContent:focus {
-  outline: none;
-  box-shadow: 0 0 20px rgba(0,123,188,0.5);
 }
 
 #ticker {
@@ -190,7 +218,7 @@ a.logoTitle:hover {
   cursor: pointer;
   transform: translateY(-10px);
   box-shadow: 0px 10px 15px #007bbc;
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 a.logoTitle:active {
@@ -235,54 +263,6 @@ h1.heatmapTitle {
   border-radius: 3px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.article-title {
-  color: #444444;
-  margin-top: 0;
-}
-
-a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
-}
-
-.article-content {
-  white-space: pre-line;
-}
-
-.article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
-}
-
-.article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3;
-}
-
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
-}
-
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-}
-
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
-}
-
-.account-heading {
-  font-size: 2.5rem;
 }
 
 .welcome-banner {
