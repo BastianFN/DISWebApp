@@ -29,6 +29,19 @@ CREATE TABLE IF NOT EXISTS User_sightings (
 	username VARCHAR(30) REFERENCES users(username)
 );
 
+CREATE OR REPLACE FUNCTION add_to_ufo_sightings() RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO UFO_sightings (comments, latitude, longitude) 
+    VALUES (NEW.comments, NEW.latitude, NEW.longitude);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_ufo_sightings_trigger
+AFTER INSERT ON Posts
+FOR EACH ROW EXECUTE FUNCTION add_to_ufo_sightings();
+
+
 -- CREATE VIEW IF NOT EXISTS Combined_sightings AS
 -- SELECT comments, latitude, longitude
 -- FROM UFO_sightings

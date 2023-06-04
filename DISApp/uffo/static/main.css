@@ -74,6 +74,48 @@ button:after {
   text-align: center;
 }
 
+.form-group {
+  margin-bottom: 0;
+}
+
+.form-control {
+  background: rgba(0,0,0,0.1);
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 1.2em;
+  border: none;
+  padding: 10px 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  border-radius: 25px;
+
+  /* Added UFO-like glow effect */
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(0,123,188,0.5);
+  background: radial-gradient(circle, rgba(0,123,188,0.5), rgba(0,0,0,0.1));
+}
+
+#longitude {
+  margin-bottom: 1rem;
+}
+
+.post.card.mb-4 {
+  margin-top: 1.5rem;
+  font-family: 'Lucida Console', 'Courier New';
+  font-weight: bold;
+  font-size: 1em;
+  text-align: center; /* Add this property to center the text */
+
+}
+
+.post.card-body {
+
+}
+
 .card-body h5 {
   margin-top: 1rem;
 }

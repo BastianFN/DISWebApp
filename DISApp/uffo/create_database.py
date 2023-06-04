@@ -130,8 +130,50 @@ def create_user_sightings_table():
     cur.close()
 
 
+def add_to_ufo_sightings():
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
+
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+    CREATE OR REPLACE FUNCTION add_to_ufo_sightings() RETURNS TRIGGER AS $$
+    BEGIN
+        INSERT INTO UFO_sightings (comments, latitude, longitude) 
+        VALUES (NEW.comments, NEW.latitude, NEW.longitude);
+        RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+    """
+    )
+    conn.commit()
+    cur.close()
+
+
+def create_trigger():
+    conn = psycopg2.connect(
+        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+    )
+
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+    CREATE TRIGGER update_ufo_sightings_trigger
+    AFTER INSERT ON Posts
+    FOR EACH ROW EXECUTE FUNCTION add_to_ufo_sightings();
+    """
+    )
+    conn.commit()
+    cur.close()
+
+
 # Run the function
 create_database()
 create_user_table()
 create_post_table()
 create_user_sightings_table()
+add_to_ufo_sightings()
+create_trigger()

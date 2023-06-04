@@ -82,7 +82,7 @@ def create_post():
     cur.close()
 
     flash('Post created successfully!', 'success')
-    return redirect(url_for('Login.home'))  # Redirect user to the home page (or wherever you want)
+    return redirect(url_for('Login.posts'))  # Redirect user to the home page (or wherever you want)
 
 @Login.route("/login", methods=['GET', 'POST'])
 def login():

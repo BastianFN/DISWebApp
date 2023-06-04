@@ -40,6 +40,32 @@ def get_ufo_comments(page=1, per_page=50):
 
     return data
 
+def select_all_sightings():
+    from uffo import db
+    conn = psycopg2.connect(db)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT latitude, longitude, comments FROM All_sightings;")
+    data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return data
+
+def get_all_comments(page=1, per_page=50):
+    from uffo import db
+    conn = psycopg2.connect(db)
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT comments FROM All_sightings ORDER BY sighting_id ASC LIMIT {per_page} OFFSET {(page - 1) * per_page}")
+    data = [row[0] for row in cursor.fetchall()]
+
+    cursor.close()
+    conn.close()
+
+    return data
+
 
 
 # def import_from_csv(file_path):
