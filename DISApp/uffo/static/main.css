@@ -22,7 +22,7 @@ h6 {
   font-family: 'Lucida Console', 'Courier New';
   font-weight: bold;
   font-size: 3em;
-  text-align: center; /* Add this property to center the text */
+  text-align: center;
   transition: transform ease 0.2s, box-shadow 0.2s ease;
 }
 
@@ -88,8 +88,6 @@ h6 {
   border-radius: 25px;
   background: rgba(0, 0, 0, 0.7);
   border: 0.2px dotted #007bbc;
-
-  /* Added UFO-like glow effect */
 }
 
 .form-control:focus {
@@ -163,7 +161,7 @@ button:after {
   font-family: 'Lucida Console', 'Courier New';
   font-weight: bold;
   font-size: 1em;
-  text-align: center; /* Add this property to center the text */
+  text-align: center;
 }
 
 .post.card-body {
@@ -175,14 +173,14 @@ button:after {
 
 #ticker {
   animation: ticker 30s linear infinite;
-  border: none; /* temporary, to see the boundaries of the ticker div */
+  border: none;
   background-color: rgba(
     0,
     0,
     0,
     0
   ); /* temporary, to ensure the text is visible */
-  height: 50px; /* adjust if needed */
+  height: 50px;
   font-size: 20px;
   font-style: italic;
   color: white;
@@ -207,7 +205,7 @@ a.logoTitle {
   font-family: 'Lucida Console', 'Courier New';
   font-weight: bold;
   font-size: 4em;
-  text-align: center; /* Add this property to center the text */
+  text-align: center;
   transition: transform ease 0.3s, box-shadow 0.3s ease;
   text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   padding: 10px 20px;
@@ -229,7 +227,7 @@ h1.heatmapTitle {
   color: #007bbc;
   font-family: 'Lucida Console', 'Courier New';
   font-weight: bold;
-  text-align: center; /* Add this property to center the text */
+  text-align: center;
 }
 
 .bg-steel {
@@ -304,4 +302,107 @@ h1.heatmapTitle {
 .post-title {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+}
+
+/* Login Form Section */
+.content-section-login {
+  background: radial-gradient(ellipse at center, #020031 0%, #6d3353 100%);
+  padding: 20px 30px;
+  border-radius: 10px;
+  margin-top: 4rem;
+}
+
+.form-group-login {
+  margin-bottom: 1em;
+}
+
+.form-control-label-login {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00ff00; /* Gives a glowing effect to the text */
+}
+
+.form-control-login {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 25px;
+  padding-left: 12px;
+  padding-right: 12px;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  width: 55%;
+  margin-left: 14px;
+}
+
+.form-control-login:focus {
+  outline: none;
+  box-shadow: 0 0 20px #00ff00; /* Green, glowy box shadow */
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.form-check-input-login {
+  transition: box-shadow 0.3s ease;
+}
+
+.form-check-label-login {
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-login {
+  position: relative;
+  background: rgba(0, 255, 0, 1);
+  color: #000000;
+  font-weight: bold;
+  border-radius: 50%; /* Make it circular to resemble a UFO */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0px 8px 15px rgba(0, 255, 0, 0.3);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  padding: 15px 30px; /* You can adjust padding to change the size of the button */
+}
+
+.btn-login:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  margin-left: -25px; /* half of width */
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease 0s;
+  box-shadow: 0 0 25px #00ff00, 0 0 50px #00ff00, 0 0 200px #00ff00;
+  z-index: -1;
+}
+
+.btn-login:hover {
+  background: rgba(0, 255, 0, 0.8);
+  transform: translateY(-10px) scale(1.1); /* Move upwards and increase size slightly */
+  box-shadow: 0 0 5px #00ff00, 0 0 25px #00ff00, 0 0 50px #00ff00, 0 0 200px #00ff00;
+}
+
+.btn-login:hover:before {
+  box-shadow: 0 0 50px #00ff00, 0 0 100px #00ff00, 0 0 200px #00ff00, 0 0 400px #00ff00;
+  transform: translateY(10px) scale(1.5); /* Move downwards and increase size */
+  opacity: 0;
+}
+
+
+.border-bottom-login {
+  border-bottom: 2px solid #00ff00; /* Green, glowy border */
+}
+
+.mb-4-login {
+  margin-bottom: 1.5em;
+  color: #ffffff;
+  font-family: 'Lucida Console', 'Courier New';
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+  transition: transform ease 0.2s, box-shadow 0.2s ease;
+  text-shadow: 0 0 10px #00ff00; /* Gives a glowing effect to the text */
 }

@@ -2,8 +2,6 @@ import psycopg2
 import csv
 
 # Helper function to validate floating point numbers
-
-
 def is_float(value):
     try:
         float(value)
@@ -11,24 +9,16 @@ def is_float(value):
     except ValueError:
         return False
 
-
 def create_database():
     # connect to the 'uffo' database
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
     cursor = conn.cursor()
 
     # drop the 'ufo_sightings' table if it exists
-    cursor.execute(
-        """
-        DROP TABLE IF EXISTS UFO_sightings;
-    """
-    )
+    cursor.execute("DROP TABLE IF EXISTS UFO_sightings;")
 
     # create the 'ufo_sightings' table
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE UFO_sightings(
             sighting_id SERIAL PRIMARY KEY,
             city VARCHAR(255),
@@ -39,8 +29,7 @@ def create_database():
             latitude FLOAT,
             longitude FLOAT
         );
-    """
-    )
+    """)
 
     # commit the transaction
     conn.commit()
@@ -67,112 +56,113 @@ def create_database():
     cursor.close()
     conn.close()
 
-
 def create_user_table():
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
     cur = conn.cursor()
 
-    cur.execute(
-        """
-    CREATE TABLE IF NOT EXISTS users(
-        username VARCHAR(30) PRIMARY KEY,
-        password varchar(120)
-    );
-    """
-    )
+    # drop the 'users' table if it exists along with dependent objects
+    cur.execute("DROP TABLE IF EXISTS users CASCADE;")
+
+    cur.execute("""
+        CREATE TABLE users(
+            username VARCHAR(30) PRIMARY KEY,
+            password varchar(120)
+        );
+    """)
+
     conn.commit()
     cur.close()
-
 
 def create_post_table():
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
     cur = conn.cursor()
 
-    cur.execute(
-        """
-        CREATE TABLE IF NOT EXISTS Posts(
-	post_number SERIAL PRIMARY KEY,
-	longitude DECIMAL(11,8),
-	latitude DECIMAL(11,8),
-	comments TEXT,
-    date_posted DATE,
-	username VARCHAR(30) REFERENCES Users(username)
-    );
-        """
-    )
+    # drop the 'Posts' table if it exists
+    cur.execute("DROP TABLE IF EXISTS Posts;")
+
+    cur.execute("""
+        CREATE TABLE Posts(
+            post_number SERIAL PRIMARY KEY,
+            longitude DECIMAL(11,8),
+            latitude DECIMAL(11,8),
+            comments TEXT,
+            date_posted DATE,
+            username VARCHAR(30) REFERENCES Users(username)
+        );
+    """)
+
     conn.commit()
     cur.close()
-
 
 def create_user_sightings_table():
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
-
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
     cur = conn.cursor()
 
-    cur.execute(
-        """
-    CREATE TABLE IF NOT EXISTS User_sightings(
-        sighting_id SERIAL PRIMARY KEY,
-        comments TEXT,
-        latitude FLOAT,
-        longitude FLOAT,
-        username VARCHAR(30) REFERENCES users(username)
-    );
-    """
-    )
+    # drop the 'User_sightings' table if it exists
+    cur.execute("DROP TABLE IF EXISTS User_sightings;")
+
+    cur.execute("""
+        CREATE TABLE User_sightings(
+            sighting_id SERIAL PRIMARY KEY,
+            comments TEXT,
+            latitude FLOAT,
+            longitude FLOAT,
+            username VARCHAR(30) REFERENCES users(username)
+        );
+    """)
+
     conn.commit()
     cur.close()
-
 
 def add_to_ufo_sightings():
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
-
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
     cur = conn.cursor()
 
-    cur.execute(
-        """
-    CREATE OR REPLACE FUNCTION add_to_ufo_sightings() RETURNS TRIGGER AS $$
-    BEGIN
-        INSERT INTO UFO_sightings (comments, latitude, longitude) 
-        VALUES (NEW.comments, NEW.latitude, NEW.longitude);
-        RETURN NEW;
-    END;
-    $$ LANGUAGE plpgsql;
-    """
-    )
+    cur.execute("""
+        CREATE OR REPLACE FUNCTION add_to_ufo_sightings() RETURNS TRIGGER AS $$
+        BEGIN
+            INSERT INTO UFO_sightings (comments, latitude, longitude) 
+            VALUES (NEW.comments, NEW.latitude, NEW.longitude);
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+    """)
+
     conn.commit()
     cur.close()
-
 
 def create_trigger():
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
-
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
     cur = conn.cursor()
 
-    cur.execute(
-        """
-    CREATE TRIGGER update_ufo_sightings_trigger
-    AFTER INSERT ON Posts
-    FOR EACH ROW EXECUTE FUNCTION add_to_ufo_sightings();
-    """
-    )
+    cur.execute("""
+        DROP TRIGGER IF EXISTS update_ufo_sightings_trigger ON Posts;
+        CREATE TRIGGER update_ufo_sightings_trigger
+        AFTER INSERT ON Posts
+        FOR EACH ROW EXECUTE FUNCTION add_to_ufo_sightings();
+    """)
+
     conn.commit()
     cur.close()
 
+def add_users():
+    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    cur = conn.cursor()
+
+    users = [("bastian", "1"), ("simon", "2"), ("magnus", "3"), ("kasper", "4"), ("dis", "uffo")]
+
+    for user in users:
+        cur.execute("""
+            INSERT INTO users (username, password) VALUES (%s, %s);
+        """, (user[0], user[1]))
+
+    conn.commit()
+    cur.close()
 
 # Run the function
 create_database()
 create_user_table()
+add_users()  # Call this function after creating the user table
 create_post_table()
 create_user_sightings_table()
 add_to_ufo_sightings()
