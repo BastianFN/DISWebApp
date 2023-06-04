@@ -1,9 +1,10 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request, Blueprint, Flask
 from uffo import bcrypt
 from uffo.forms import LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 from uffo.models import select_User, get_posts
 from datetime import datetime
+from uffo import app, login_manager
 
 
 #202212
@@ -35,6 +36,7 @@ def heatmap():
     return render_template('heatmap.html', title='Heatmap')
 
 @Login.route("/posts", methods=['GET'])
+@login_required
 def posts():
     #202212
     mysession["state"]="posts"
@@ -110,7 +112,6 @@ def login():
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
     return render_template('login.html', title='Login', form=form)
-
 
 
 @Login.route("/logout")
