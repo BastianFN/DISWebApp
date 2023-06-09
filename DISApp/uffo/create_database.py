@@ -1,6 +1,8 @@
 import psycopg2
 import csv
 
+db = "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+
 # Helper function to validate floating point numbers
 def is_float(value):
     try:
@@ -11,7 +13,7 @@ def is_float(value):
 
 def create_database():
     # connect to the 'uffo' database
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cursor = conn.cursor()
 
     # drop the 'ufo_sightings' table if it exists
@@ -57,7 +59,7 @@ def create_database():
     conn.close()
 
 def create_user_table():
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
 
     # drop the 'users' table if it exists along with dependent objects
@@ -74,7 +76,7 @@ def create_user_table():
     cur.close()
 
 def create_post_table():
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
 
     # drop the 'Posts' table if it exists
@@ -95,7 +97,7 @@ def create_post_table():
     cur.close()
 
 def create_user_sightings_table():
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
 
     # drop the 'User_sightings' table if it exists
@@ -115,7 +117,7 @@ def create_user_sightings_table():
     cur.close()
 
 def add_to_ufo_sightings():
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
 
     cur.execute("""
@@ -132,7 +134,7 @@ def add_to_ufo_sightings():
     cur.close()
 
 def create_trigger():
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
 
     cur.execute("""
@@ -146,7 +148,7 @@ def create_trigger():
     cur.close()
 
 def add_users():
-    conn = psycopg2.connect("dbname='uffo' user='bastian' host='127.0.0.1' password = ''")
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
 
     users = [("bastian", "1"), ("simon", "2"), ("magnus", "3"), ("kasper", "4"), ("dis", "uffo")]

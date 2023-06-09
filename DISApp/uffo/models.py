@@ -6,6 +6,9 @@ from uffo import conn, login_manager
 from flask_login import UserMixin
 from psycopg2 import sql
 
+
+db = "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
+
 @login_manager.user_loader
 def load_user(user_id):
     cur = conn.cursor()
@@ -122,9 +125,7 @@ def select_User(username):
     return user
 
 def get_posts():
-    conn = psycopg2.connect(
-        "dbname='uffo' user='bastian' host='127.0.0.1' password = ''"
-    )
+    conn = psycopg2.connect(db)
     cur = conn.cursor()
     
     cur.execute(
