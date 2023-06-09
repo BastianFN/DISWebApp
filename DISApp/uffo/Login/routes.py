@@ -59,7 +59,7 @@ def create_post():
     latitude = request.form.get('latitude')
     comment = request.form.get('comment')
     date = date_posted
-    username = current_user.username  # assuming you are using Flask-Login or a similar extension
+    username = current_user.username 
 
     # Add to Posts table
     post_query = """
@@ -73,8 +73,7 @@ def create_post():
     INSERT INTO User_sightings (comments, latitude, longitude, username)
     VALUES (%s, %s, %s, %s)
     """
-    # You'll need to determine how to get city, state, country data.
-    # For now, I'll just set them to NULL.
+
     city = state = country = None
 
     cur.execute(sighting_query, (comment, latitude, longitude, username))
@@ -84,7 +83,7 @@ def create_post():
     cur.close()
 
     flash('Post created successfully!', 'success')
-    return redirect(url_for('Login.posts'))  # Redirect user to the home page (or wherever you want)
+    return redirect(url_for('Login.posts'))  # Redirect user to the home page
 
 @Login.route("/login", methods=['GET', 'POST'])
 def login():

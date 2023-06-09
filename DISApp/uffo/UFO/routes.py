@@ -15,7 +15,7 @@ def get_sightings():
         {
             'latitude': sighting[0],
             'longitude': sighting[1],
-            'comments': sighting[2]  # note the change here
+            'comments': sighting[2]
         }
         for sighting in sightings
     ]

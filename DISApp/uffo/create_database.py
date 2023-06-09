@@ -159,10 +159,10 @@ def add_users():
     conn.commit()
     cur.close()
 
-# Run the function
+# Run the functions
 create_database()
 create_user_table()
-add_users()  # Call this function after creating the user table
+add_users()
 create_post_table()
 create_user_sightings_table()
 add_to_ufo_sightings()
