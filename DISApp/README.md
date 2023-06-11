@@ -9,9 +9,13 @@ Run the code below to install the necessary modules.
 
 >$ pip install -r requirements.txt
 
+If for some reason you get a pb_config error, change psycopg2 to psycopg2-binary in requirements.txt and run the
+command again.
+
 
 ## Database init
 1. Change the database variable db in __init__.py, create_database.py and models.py to your own database.
+2. Run the create_database.py file in the DISapp folder. This will create the database and the tables.
 
 
 ## Running flask
