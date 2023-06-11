@@ -1,6 +1,6 @@
 # Introduction
 This project is a website running Python and Flask library.
-The schema of the database is a ufo forum, where people can post about sightings and add to the sightings table, which can be viewed in a heatmap of ufo sightings.
+The schema of the database is a ufo forum, where people can post about sightings and add to the sightings table, which can be viewed in a heatmap of ufo sightings. Note that in order to see all features, you will need access to the internet.
 
 
 
